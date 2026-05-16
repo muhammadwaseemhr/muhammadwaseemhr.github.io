@@ -1,0 +1,3716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Muhammad Waseem — Customer Analytics for Shopify DTC Brands</title>
+  <meta name="description"
+    content="RFM Segmentation, CLV Modeling & Sales Forecasting for health, beauty & fashion Shopify brands worldwide. Find the hidden revenue your dashboard can't see." />
+  <!-- TODO: replace with actual domain before publishing -->
+  <link rel="canonical" href="https://YOUR_LIVE_DOMAIN.com" />
+  <meta property="og:title" content="Muhammad Waseem — Revenue Intelligence for Shopify DTC Brands" />
+  <meta property="og:description"
+    content="RFM Segmentation, CLV Modeling & Sales Forecasting for health, beauty & fashion Shopify brands worldwide. Find the hidden revenue your dashboard can't see." />
+  <meta property="og:image" content="https://mwaseem-analytics.com/og-preview.png" />
+  <meta property="og:type" content="website" />
+  <!-- TODO: replace with actual domain before publishing -->
+  <meta property="og:url" content="https://YOUR_LIVE_DOMAIN.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    :root {
+      --navy: #050810;
+      --navy-2: #0d121d;
+      --navy-3: #151b2a;
+      --navy-4: #1e2537;
+      --navy-5: #283045;
+      --gold: #d4af37;
+      --gold-lt: #ebd078;
+      --gold-dim: rgba(212, 175, 55, 0.12);
+      --gold-line: rgba(212, 175, 55, 0.25);
+      --white: #ffffff;
+      --g1: #f2f5f8;
+      --g2: #a2adb8;
+      --g3: #758394;
+      --g4: #4a5868;
+      --green: #2ecc71;
+      --green-dim: rgba(46, 204, 113, 0.15);
+      --red-dim: rgba(231, 76, 60, 0.12);
+      --red-line: rgba(231, 76, 60, 0.25);
+      --line: rgba(255, 255, 255, 0.08);
+      --line2: rgba(255, 255, 255, 0.04);
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--navy);
+      color: var(--g1);
+      line-height: 1.75;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2.5rem
+    }
+
+    @media(max-width:600px) {
+      .wrap {
+        padding: 0 1.25rem
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s var(--ease-out), transform .7s var(--ease-out)
+    }
+
+    .reveal.vis {
+      opacity: 1;
+      transform: none
+    }
+
+    .d1 {
+      transition-delay: .08s
+    }
+
+    .d2 {
+      transition-delay: .16s
+    }
+
+    .d3 {
+      transition-delay: .24s
+    }
+
+    .d4 {
+      transition-delay: .32s
+    }
+
+    .d5 {
+      transition-delay: .40s
+    }
+
+    .s-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .s-label::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--gold)
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--line)
+    }
+
+    .section {
+      padding: 4rem 0
+    }
+
+    /* ── PREMIUM ACCENTS ── */
+    .page-top-bar {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, #c9a84c 50%, var(--gold) 80%, transparent 100%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+    }
+
+    .hero-credential {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-line);
+      border-radius: 99px;
+      padding: 6px 16px 6px 10px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp .7s var(--ease-out) .0s forwards;
+    }
+
+    .hero-credential-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s infinite;
+    }
+
+    .hero-credential span {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Premium ornamental divider */
+    .divider-ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .divider-ornament::before,
+    .divider-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line));
+    }
+
+    .divider-ornament::after {
+      background: linear-gradient(90deg, var(--line), transparent);
+    }
+
+    .divider-ornament-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--gold-line);
+      border-radius: 50%;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .divider-ornament-icon svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--gold);
+      stroke: none;
+    }
+
+    /* Premium icon box replacing emojis */
+    .discover-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: .9rem;
+      flex-shrink: 0;
+    }
+
+    .discover-icon-box svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* About me card decorative quote mark */
+    .about-me-card::after {
+      content: '\201C';
+      font-family: var(--serif);
+      font-size: 120px;
+      color: rgba(139, 100, 16, .06);
+      position: absolute;
+      bottom: -28px;
+      right: 20px;
+      line-height: 1;
+      pointer-events: none;
+      font-style: italic;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(5, 8, 16, .92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      transition: box-shadow .3s;
+    }
+
+    .nav.scrolled {
+      box-shadow: 0 4px 24px rgba(139, 100, 16, 0.15)
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    @media(max-width:600px) {
+      .nav-inner {
+        padding: 0 1.25rem
+      }
+    }
+
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      text-decoration: none
+    }
+
+    .nav-brand span {
+      color: var(--gold)
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: .85rem
+    }
+
+    .nav-link {
+      font-size: 13px;
+      color: var(--g2);
+      text-decoration: none;
+      transition: all .3s var(--ease-out);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transition: all .3s var(--ease-out);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover {
+      color: var(--white);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn-nav {
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      padding: 10px 22px;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .2s var(--ease-spring);
+      white-space: nowrap;
+    }
+
+    .btn-nav:hover {
+      background: var(--gold-lt);
+      transform: scale(1.04)
+    }
+
+    @media(max-width:540px) {
+      .nav-link {
+        display: none
+      }
+    }
+
+    @media(max-width:380px) {
+      .btn-nav {
+        font-size: 11px;
+        padding: 7px 13px
+      }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 5.5rem 0 4.5rem;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 80% 70% at 90% -10%, rgba(139, 100, 16, .08) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 60% at -10% 110%, rgba(26, 106, 72, .06) 0%, transparent 55%);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255, 255, 255, .022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .022) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, .5) 20%, rgba(0, 0, 0, .5) 80%, transparent);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp .7s var(--ease-out) .05s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 22px;
+      height: 1.5px;
+      background: var(--gold)
+    }
+
+    .hero-pain {
+      font-size: clamp(15px, 2vw, 17px);
+      color: var(--g2);
+      line-height: 2;
+      max-width: 560px;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp .7s var(--ease-out) .15s forwards;
+    }
+
+    .hero-pain strong {
+      color: var(--g1);
+      font-weight: 500
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(42px, 7.5vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: .6rem;
+      opacity: 0;
+      animation: fadeUp .7s var(--ease-out) .25s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--g3);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 2.25rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp .7s var(--ease-out) .35s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .9rem;
+      margin-bottom: 2.25rem;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp .7s var(--ease-out) .45s forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: .01em;
+      transition: background .2s, transform .2s var(--ease-spring), box-shadow .2s;
+      box-shadow: 0 4px 24px rgba(201, 168, 76, .30);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-lt);
+      transform: scale(1.04) translateY(-1px);
+      box-shadow: 0 8px 32px rgba(201, 168, 76, .40)
+    }
+
+    .btn-ghost {
+      font-size: 13.5px;
+      color: var(--g2);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+      padding: 4px 0;
+    }
+
+    .btn-ghost:hover {
+      color: var(--white)
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .7s var(--ease-out) .55s forwards;
+      margin-top: 1rem;
+    }
+
+    .hero-meta a {
+      font-size: 13px;
+      color: var(--g1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--navy-3);
+      border: 1px solid var(--gold-line);
+      border-radius: 8px;
+      transition: all .2s var(--ease-out);
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .hero-meta a svg {
+      stroke: var(--gold);
+    }
+
+    .hero-meta a:hover {
+      background: var(--white);
+      color: var(--navy);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(139, 100, 16, 0.12);
+    }
+
+    .hero-meta a:hover svg {
+      stroke: var(--navy);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -300% center
+      }
+
+      100% {
+        background-position: 300% center
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px)
+      }
+
+      50% {
+        transform: translateY(-7px)
+      }
+    }
+
+    @keyframes glow-pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(139, 100, 16, .08), 0 8px 40px rgba(0, 0, 0, .3)
+      }
+
+      50% {
+        box-shadow: 0 0 50px rgba(139, 100, 16, .22), 0 8px 40px rgba(0, 0, 0, .3)
+      }
+    }
+
+    @keyframes card-in {
+      from {
+        opacity: 0;
+        transform: translateY(32px) scale(.97)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes spin-in {
+      from {
+        opacity: 0;
+        transform: rotate(-8deg) scale(.85)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .shimmer-gold {
+      background: linear-gradient(90deg, var(--gold) 0%, #d4a836 25%, #f0c84a 50%, #d4a836 75%, var(--gold) 100%);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+
+    .animate-float {
+      animation: float 5s ease-in-out infinite
+    }
+
+    .animate-glow {
+      animation: glow-pulse 3s ease-in-out infinite
+    }
+
+    .stagger-item {
+      opacity: 0;
+      transform: translateY(24px)
+    }
+
+    .stagger-item.vis {
+      animation: card-in .6s var(--ease-out) forwards;
+    }
+
+    .stagger-item:nth-child(1).vis {
+      animation-delay: .04s
+    }
+
+    .stagger-item:nth-child(2).vis {
+      animation-delay: .14s
+    }
+
+    .stagger-item:nth-child(3).vis {
+      animation-delay: .24s
+    }
+
+    .stagger-item:nth-child(4).vis {
+      animation-delay: .34s
+    }
+
+    .stagger-item:nth-child(5).vis {
+      animation-delay: .44s
+    }
+
+    .stagger-item:nth-child(6).vis {
+      animation-delay: .54s
+    }
+
+    /* ── 3D CARD EFFECTS & ENHANCED SHADOWS ── */
+    @keyframes tilt-hover {
+      0% {
+        transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0);
+      }
+
+      100% {
+        transform: perspective(800px) rotateX(3deg) rotateY(-3deg) translateY(-8px);
+      }
+    }
+
+    @keyframes shadow-rise {
+      from {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+      }
+
+      to {
+        box-shadow: 0 24px 60px rgba(0, 0, 0, .18), 0 6px 20px rgba(139, 100, 16, .10);
+      }
+    }
+
+    /* Apply perspective context to card grids */
+    .trust-grid,
+    .discover-grid,
+    .services-grid,
+    .process-grid-new {
+      perspective: 1200px;
+    }
+
+    /* Trust cards — deep shadow + 3D lift */
+    .trust-card {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06), 0 0 0 1px transparent;
+      transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out), border-color .2s;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .trust-card:hover {
+      transform: perspective(800px) rotateX(3deg) rotateY(-4deg) translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, .16), 0 6px 18px rgba(139, 100, 16, .12), 0 0 0 1px var(--gold-line);
+      border-color: var(--gold-line);
+    }
+
+    /* Discover cards */
+    .discover-card {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+      transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out), border-color .2s;
+      transform-style: preserve-3d;
+    }
+
+    .discover-card:hover {
+      transform: perspective(800px) rotateX(4deg) rotateY(-3deg) translateY(-9px) scale(1.02);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .15), 0 5px 16px rgba(139, 100, 16, .10), 0 0 0 1px var(--gold-line);
+      border-color: var(--gold-line);
+    }
+
+    /* Service cards */
+    .svc {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .07);
+      transform-style: preserve-3d;
+    }
+
+    .svc:hover {
+      transform: perspective(900px) rotateX(3deg) rotateY(-3deg) translateY(-8px) scale(1.01);
+      box-shadow: 0 24px 65px rgba(0, 0, 0, .18), 0 8px 24px rgba(139, 100, 16, .10);
+    }
+
+    .svc.featured {
+      box-shadow: 0 4px 20px rgba(139, 100, 16, .10), 0 2px 8px rgba(0, 0, 0, .07);
+    }
+
+    .svc.featured:hover {
+      box-shadow: 0 24px 65px rgba(139, 100, 16, .18), 0 8px 24px rgba(0, 0, 0, .14);
+    }
+
+    /* Step cards */
+    .step-new {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+      transform-style: preserve-3d;
+    }
+
+    .step-new:hover {
+      transform: perspective(800px) rotateX(4deg) rotateY(-3deg) translateY(-7px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .15), 0 5px 15px rgba(139, 100, 16, .10), 0 0 0 1px var(--gold-line);
+      border-color: var(--gold-line);
+    }
+
+    /* Case study card */
+    .case-card {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .10), 0 1px 4px rgba(0, 0, 0, .06);
+    }
+
+    /* Calculator wrap */
+    .calc-wrap {
+      box-shadow: 0 4px 24px rgba(139, 100, 16, .10), 0 1px 6px rgba(0, 0, 0, .06);
+    }
+
+    /* FAQ items */
+    .faq-item {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+      transition: border-color .2s, box-shadow .2s, transform .2s var(--ease-spring);
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .10);
+      transform: translateY(-1px);
+    }
+
+    /* Urgency stats */
+    .urgency-stat {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+      transition: transform .3s var(--ease-spring), box-shadow .3s;
+    }
+
+    .urgency-stat:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, .12), 0 3px 10px rgba(139, 100, 16, .10);
+    }
+
+    /* ── UNIVERSAL HOVER SHADOWS (remaining boxes) ── */
+
+    /* About me card — gentle 3D tilt + gold glow */
+    .about-me-card {
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .08), 0 1px 4px rgba(0, 0, 0, .05);
+      transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out), border-color .3s;
+      transform-style: preserve-3d;
+    }
+
+    .about-me-card:hover {
+      transform: perspective(900px) rotateX(2deg) rotateY(-2deg) translateY(-6px);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .13), 0 6px 20px rgba(139, 100, 16, .14), 0 0 0 1px rgba(139, 100, 16, .25);
+      border-color: rgba(139, 100, 16, .40);
+    }
+
+    /* Proof card */
+    .proof-card {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+      transition: transform .3s var(--ease-spring), box-shadow .3s, border-color .2s;
+    }
+
+    .proof-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .12), 0 4px 14px rgba(139, 100, 16, .10);
+      border-color: var(--gold-line);
+    }
+
+    /* Case study card */
+    .case-card {
+      transition: transform .3s var(--ease-spring), box-shadow .3s;
+    }
+
+    .case-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .16), 0 6px 20px rgba(139, 100, 16, .10);
+    }
+
+    /* Case study stat boxes */
+    .cs-stat {
+      transition: transform .3s var(--ease-spring), box-shadow .3s, border-color .2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+    }
+
+    .cs-stat:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, .12), 0 3px 10px rgba(139, 100, 16, .08);
+      border-color: var(--gold-line);
+    }
+
+    /* Not for everyone wrap */
+    .nfe-wrap {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+      transition: transform .3s var(--ease-spring), box-shadow .3s;
+    }
+
+    .nfe-wrap:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .12), 0 4px 14px rgba(139, 100, 16, .08);
+    }
+
+    /* NFE list items */
+    .nfe-list li {
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+      transition: border-color .2s, box-shadow .2s, transform .2s var(--ease-spring);
+    }
+
+    .nfe-list li:hover {
+      transform: translateX(4px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .09);
+    }
+
+    /* Urgency wrap */
+    .urgency-wrap {
+      box-shadow: 0 2px 14px rgba(0, 0, 0, .07);
+      transition: transform .3s var(--ease-spring), box-shadow .3s;
+    }
+
+    .urgency-wrap:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, .12), 0 4px 14px rgba(139, 100, 16, .08);
+    }
+
+    /* Service footer guarantee bar */
+    .svc-footer {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
+      transition: box-shadow .3s, border-color .2s;
+    }
+
+    .svc-footer:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .09), 0 2px 8px rgba(139, 100, 16, .07);
+      border-color: var(--gold-line);
+    }
+
+    /* CTA block */
+    .cta-block {
+      transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+    }
+
+    .cta-block:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .14), 0 6px 24px rgba(139, 100, 16, .12);
+    }
+
+    /* ── CONTACT BOXES ── */
+    .contact-section {
+      padding: 3rem 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media(max-width:580px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-box {
+      border-radius: 20px;
+      padding: 2rem 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+      cursor: pointer;
+    }
+
+    .contact-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity .4s;
+    }
+
+    .contact-box:hover::before {
+      opacity: 1;
+    }
+
+    .contact-box:hover {
+      transform: perspective(700px) rotateX(4deg) rotateY(-4deg) translateY(-10px) scale(1.02);
+    }
+
+    /* Email box */
+    .contact-box.email {
+      background: linear-gradient(135deg, #1a1208 0%, #2c1e0a 100%);
+      border: 1px solid rgba(139, 100, 16, .35);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, .25), 0 2px 8px rgba(139, 100, 16, .12);
+      color: #e8d5b0;
+    }
+
+    .contact-box.email::before {
+      background: linear-gradient(135deg, rgba(139, 100, 16, .12) 0%, rgba(201, 168, 76, .06) 100%);
+    }
+
+    .contact-box.email:hover {
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .35), 0 6px 24px rgba(139, 100, 16, .22);
+      border-color: rgba(139, 100, 16, .60);
+    }
+
+    /* LinkedIn box */
+    .contact-box.linkedin {
+      background: linear-gradient(135deg, #0a1628 0%, #0f2040 100%);
+      border: 1px solid rgba(10, 102, 194, .35);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, .25), 0 2px 8px rgba(10, 102, 194, .15);
+      color: #b8d4f0;
+    }
+
+    .contact-box.linkedin::before {
+      background: linear-gradient(135deg, rgba(10, 102, 194, .12) 0%, rgba(30, 140, 230, .06) 100%);
+    }
+
+    .contact-box.linkedin:hover {
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .35), 0 6px 24px rgba(10, 102, 194, .28);
+      border-color: rgba(10, 102, 194, .60);
+    }
+
+    .contact-box-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-box.email .contact-box-icon {
+      background: rgba(139, 100, 16, .20);
+      border: 1px solid rgba(139, 100, 16, .30);
+    }
+
+    .contact-box.linkedin .contact-box-icon {
+      background: rgba(10, 102, 194, .20);
+      border: 1px solid rgba(10, 102, 194, .30);
+    }
+
+    .contact-box-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .contact-box.email .contact-box-icon svg {
+      stroke: #c9a84c;
+    }
+
+    .contact-box.linkedin .contact-box-icon svg {
+      stroke: #5baef0;
+    }
+
+    .contact-box-body {
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-box-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: .35rem;
+      opacity: .7;
+    }
+
+    .contact-box.email .contact-box-label {
+      color: #c9a84c;
+    }
+
+    .contact-box.linkedin .contact-box-label {
+      color: #5baef0;
+    }
+
+    .contact-box-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .contact-box.email .contact-box-title {
+      color: #f0ddb0;
+    }
+
+    .contact-box.linkedin .contact-box-title {
+      color: #c8e0ff;
+    }
+
+    .contact-box-sub {
+      font-size: 13px;
+      margin-top: .3rem;
+      opacity: .65;
+      font-weight: 300;
+    }
+
+    .contact-box-arrow {
+      margin-left: auto;
+      font-size: 20px;
+      opacity: .5;
+      transition: opacity .2s, transform .3s var(--ease-spring);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-box:hover .contact-box-arrow {
+      opacity: 1;
+      transform: translateX(5px);
+    }
+
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(24, 18, 10, .75);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+
+    .modal-bg.open {
+      display: flex
+    }
+
+    .modal-box {
+      background: var(--navy-3);
+      border: 1px solid var(--gold-line);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .7);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.1rem;
+      background: none;
+      border: none;
+      color: var(--g3);
+      font-size: 22px;
+      cursor: pointer;
+      transition: color .2s;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--white)
+    }
+
+    .modal-box h3 {
+      font-family: var(--serif);
+      font-size: 24px;
+      color: var(--white);
+      margin-bottom: .5rem;
+      letter-spacing: -.01em
+    }
+
+    .modal-box .modal-desc {
+      font-size: 13.5px;
+      color: var(--g2);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      font-weight: 300
+    }
+
+    .form-group {
+      margin-bottom: 1rem
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--g2);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: .4rem
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: var(--navy-4);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 14px;
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-group input::placeholder {
+      color: var(--g4)
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--gold-line)
+    }
+
+    .form-group select option {
+      background: var(--navy-3)
+    }
+
+    .btn-form {
+      width: 100%;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px;
+      border-radius: 99px;
+      cursor: pointer;
+      margin-top: .5rem;
+      transition: background .2s, transform .15s var(--ease-spring);
+    }
+
+    .btn-form:hover {
+      background: var(--gold-lt);
+      transform: scale(1.02)
+    }
+
+    .form-note {
+      font-size: 13px;
+      color: var(--g3);
+      text-align: center;
+      margin-top: .75rem;
+      line-height: 1.6
+    }
+
+    /* ── PROOF BAR ── */
+    .proof-bar {
+      background: var(--navy-2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 2rem 0
+    }
+
+    .proof-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      align-items: start
+    }
+
+    @media(max-width:600px) {
+      .proof-inner {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .proof-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-line);
+      border-radius: 99px;
+      padding: 6px 14px;
+      margin-bottom: .85rem;
+    }
+
+    .proof-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .4
+      }
+    }
+
+    .proof-badge span {
+      font-size: 12px;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600
+    }
+
+    .proof-data {
+      font-size: 15px;
+      color: var(--g1);
+      font-weight: 300;
+      line-height: 1.75
+    }
+
+    .proof-data strong {
+      color: var(--white);
+      font-weight: 500
+    }
+
+    .proof-card {
+      background: var(--navy-3);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .proof-card::before {
+      content: '"';
+      font-family: var(--serif);
+      font-size: 68px;
+      color: var(--gold-dim);
+      position: absolute;
+      top: -8px;
+      left: 16px;
+      line-height: 1;
+    }
+
+    .proof-card-text {
+      font-size: 13.5px;
+      color: var(--g3);
+      font-style: italic;
+      line-height: 1.8;
+      margin-bottom: .85rem;
+      padding-top: .4rem;
+      font-weight: 300
+    }
+
+    .proof-card-attr {
+      font-size: 11px;
+      color: var(--g4);
+      letter-spacing: .04em
+    }
+
+    .proof-card-attr strong {
+      color: var(--g3);
+      font-weight: 500
+    }
+
+    /* ── CASE STUDY ── */
+    .case-card {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, .3)
+    }
+
+    .cs-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.75rem
+    }
+
+    @media(max-width:480px) {
+      .cs-stats {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .cs-stat {
+      background: var(--navy-3);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      transition: border-color .2s
+    }
+
+    .cs-stat:hover {
+      border-color: var(--gold-line)
+    }
+
+    .cs-stat .num {
+      font-family: var(--serif);
+      font-size: 28px;
+      color: var(--white);
+      display: block;
+      margin-bottom: 5px;
+      letter-spacing: -.02em
+    }
+
+    .cs-stat .lbl {
+      font-size: 12px;
+      color: var(--g3);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 500
+    }
+
+    .cs-hero {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(26, 173, 122, .12) 0%, rgba(26, 173, 122, .03) 100%);
+      border: 1px solid rgba(26, 173, 122, .25);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 30px rgba(26, 173, 122, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cs-hero::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(26, 173, 122, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .cs-hero .big {
+      font-family: var(--serif);
+      font-size: clamp(44px, 9vw, 66px);
+      color: var(--green);
+      display: block;
+      line-height: 1;
+      letter-spacing: -.03em
+    }
+
+    .cs-hero .lbl {
+      font-size: 13.5px;
+      color: var(--g2);
+      margin-top: .5rem;
+      display: block;
+      font-weight: 300
+    }
+
+    .cs-context {
+      font-size: 14px;
+      color: var(--g3);
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 1.5rem
+    }
+
+    .cs-insight {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem
+    }
+
+    @media(max-width:480px) {
+      .cs-insight {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .cs-card {
+      border-radius: 10px;
+      padding: 1.25rem
+    }
+
+    .cs-card.before {
+      background: rgba(220, 53, 69, 0.04);
+      border: 1px solid rgba(220, 53, 69, 0.15);
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.02);
+    }
+
+    .cs-card.after {
+      background: rgba(26, 173, 122, 0.05);
+      border: 1px solid rgba(26, 173, 122, 0.22);
+      box-shadow: 0 4px 15px rgba(26, 173, 122, 0.04);
+    }
+
+    .cs-card h4 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cs-card.before h4 {
+      color: #b02a37;
+      /* Darker red for contrast */
+    }
+
+    .cs-card.after h4 {
+      color: var(--green);
+      /* Dark green */
+    }
+
+    .cs-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cs-card ul li {
+      font-size: 14.5px;
+      color: var(--g1);
+      padding: 5px 0 5px 22px;
+      position: relative;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .cs-card ul li::before {
+      position: absolute;
+      left: 0;
+      font-size: 14px;
+      top: 5px;
+      font-weight: 700;
+    }
+
+    .cs-card.before ul li::before {
+      content: '✕';
+      color: #b02a37;
+      font-size: 11px;
+      top: 8px;
+    }
+
+    .cs-card.after ul li::before {
+      content: '✓';
+      color: var(--green);
+    }
+
+    .seg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 2rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line)
+    }
+
+    .seg-table thead {
+      background: var(--navy-3)
+    }
+
+    .seg-table th {
+      text-align: left;
+      padding: 11px 15px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--g3);
+      font-weight: 600;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .seg-table td {
+      padding: 11px 15px;
+      border-bottom: 1px solid var(--line2);
+      color: var(--g2);
+      font-weight: 300;
+      background: var(--navy-2);
+      transition: background .15s
+    }
+
+    .seg-table tbody tr:hover td {
+      background: var(--navy-3)
+    }
+
+    .seg-table tr:last-child td {
+      border-bottom: none
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12.5px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .b-protect {
+      background: rgba(26, 173, 122, 0.12);
+      border: 1px solid rgba(26, 173, 122, 0.3);
+      color: #125436;
+    }
+
+    .b-nurture {
+      background: rgba(30, 100, 200, 0.1);
+      border: 1px solid rgba(30, 100, 200, 0.25);
+      color: #184b9c;
+    }
+
+    .b-warn {
+      background: rgba(180, 120, 20, 0.12);
+      border: 1px solid rgba(180, 120, 20, 0.3);
+      color: #9c680a;
+    }
+
+    .b-winback {
+      background: rgba(200, 70, 20, 0.1);
+      border: 1px solid rgba(200, 70, 20, 0.25);
+      color: #a8380e;
+    }
+
+    .b-low {
+      background: rgba(100, 100, 100, 0.1);
+      border: 1px solid rgba(100, 100, 100, 0.25);
+      color: #4a4a4a;
+    }
+
+    /* ── CALCULATOR ── */
+    .calc-wrap {
+      background: linear-gradient(135deg, var(--navy-4) 0%, var(--navy-3) 100%);
+      border: 1px solid var(--gold-line);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    .calc-wrap::before {
+      content: '';
+      position: absolute;
+      top: -70px;
+      right: -70px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 168, 76, .12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .calc-title {
+      font-family: var(--serif);
+      font-size: clamp(24px, 4vw, 32px);
+      color: var(--white);
+      margin-bottom: .5rem;
+      letter-spacing: -.01em
+    }
+
+    .calc-sub {
+      font-size: 14px;
+      color: var(--g2);
+      margin-bottom: 1.75rem;
+      font-weight: 300;
+      line-height: 1.65
+    }
+
+    .calc-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem
+    }
+
+    @media(max-width:520px) {
+      .calc-fields {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .calc-field label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .5rem
+    }
+
+    .calc-field input {
+      width: 100%;
+      background: var(--navy);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 8px;
+      padding: 12px 15px;
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 15px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .calc-field input::placeholder {
+      color: var(--g4)
+    }
+
+    .calc-field input:focus {
+      border-color: var(--gold-line)
+    }
+
+    .btn-calc {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 13px 28px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: background .2s, transform .2s var(--ease-spring);
+      letter-spacing: .01em;
+    }
+
+    .btn-calc:hover {
+      background: var(--gold-lt);
+      transform: scale(1.04)
+    }
+
+    .calc-result {
+      display: none;
+      margin-top: 1.5rem;
+      background: rgba(26, 173, 122, .10);
+      border: 1px solid rgba(26, 173, 122, .25);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .calc-result.show {
+      display: block
+    }
+
+    .result-amount {
+      font-family: var(--serif);
+      font-size: clamp(32px, 7vw, 48px);
+      color: var(--green);
+      letter-spacing: -.02em;
+      display: block;
+      margin-bottom: .35rem
+    }
+
+    .result-desc {
+      font-size: 14px;
+      color: var(--g2);
+      line-height: 1.7;
+      font-weight: 300
+    }
+
+    .result-desc strong {
+      color: var(--white);
+      font-weight: 500
+    }
+
+    .calc-disclaimer {
+      font-size: 13px;
+      color: var(--g4);
+      margin-top: 1rem;
+      line-height: 1.6
+    }
+
+    .calc-method-note {
+      font-size: 14px;
+      color: var(--g3);
+      margin-top: .6rem;
+      margin-bottom: .25rem;
+      line-height: 1.6;
+      font-weight: 300
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.1rem
+    }
+
+    @media(max-width:700px) {
+      .services-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .svc {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s var(--ease-spring), border-color .25s, box-shadow .25s;
+    }
+
+    .svc:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, .4)
+    }
+
+    .svc.featured {
+      border-color: var(--gold-line);
+      background: linear-gradient(160deg, var(--navy-4) 0%, var(--navy-2) 100%)
+    }
+
+    .svc.featured:hover {
+      border-color: var(--gold);
+      box-shadow: 0 16px 50px rgba(201, 168, 76, .12)
+    }
+
+    .svc-badge {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 99px;
+      display: inline-block;
+      margin-bottom: 1.1rem
+    }
+
+    .svc.s1 .svc-badge {
+      background: rgba(80, 130, 220, .15);
+      color: #82b0f0
+    }
+
+    .svc.s2 .svc-badge {
+      background: var(--gold-dim);
+      color: var(--gold-lt)
+    }
+
+    .svc.s3 .svc-badge {
+      background: rgba(26, 173, 122, .12);
+      color: #4ddead
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 99px;
+      font-weight: 700
+    }
+
+    .svc h3 {
+      font-family: var(--serif);
+      font-size: 19px;
+      color: var(--white);
+      margin-bottom: .35rem;
+      line-height: 1.25;
+      letter-spacing: -.01em
+    }
+
+    .svc .tagline {
+      font-size: 13.5px;
+      color: var(--g3);
+      margin-bottom: 1.1rem;
+      font-style: italic;
+      line-height: 1.6
+    }
+
+    .svc ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 1.25rem
+    }
+
+    .svc ul li {
+      font-size: 14px;
+      color: var(--g2);
+      padding: 5px 0 5px 20px;
+      position: relative;
+      line-height: 1.6;
+      font-weight: 300
+    }
+
+    .svc ul li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      font-size: 9px;
+      top: 7px;
+      color: var(--gold)
+    }
+
+    .svc .price-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+      border: 1px solid var(--gold-line);
+      border-radius: 99px;
+      padding: 8px 18px;
+      margin-top: .25rem;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .svc .price-cta:hover,
+    .svc .price-cta--featured {
+      background: var(--gold-dim)
+    }
+
+    .svc .turnaround {
+      font-size: 13.5px;
+      color: var(--g4);
+      margin-top: 5px
+    }
+
+    .svc-footer {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: var(--navy-3);
+      border: 1px solid var(--line);
+      border-radius: 10px
+    }
+
+    .svc-footer span {
+      font-size: 13px;
+      color: var(--g3);
+      font-weight: 300
+    }
+
+    .svc-price-hint {
+      font-size: 13px;
+      color: var(--gold);
+      margin-top: 4px;
+      font-weight: 400
+    }
+
+    /* ── ABOUT ME ── */
+    .about-me-card {
+      background: var(--navy-2);
+      border: 1px solid var(--gold-line);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: box-shadow 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+    }
+
+    .about-me-card:hover {
+      box-shadow: 0 8px 30px rgba(139, 100, 16, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .about-me-card::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139, 100, 16, .08) 0%, transparent 70%);
+      pointer-events: none
+    }
+
+    .about-me-card h4 {
+      font-family: var(--serif);
+      font-size: 18px;
+      color: var(--white);
+      margin-bottom: .75rem;
+      letter-spacing: -.01em
+    }
+
+    .about-me-card p {
+      font-size: 14px;
+      color: var(--g2);
+      line-height: 1.85;
+      font-weight: 300
+    }
+
+    /* ── FOUNDERS DISCOVER ── */
+    .discover-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem
+    }
+
+    @media(max-width:620px) {
+      .discover-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .discover-card {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color .2s, transform .2s var(--ease-spring)
+    }
+
+    .discover-card:hover {
+      border-color: var(--gold-line);
+      transform: translateY(-3px)
+    }
+
+    .discover-icon {
+      font-size: 22px;
+      margin-bottom: .75rem
+    }
+
+    .discover-card h4 {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .45rem
+    }
+
+    .discover-card p {
+      font-size: 14px;
+      color: var(--g3);
+      line-height: 1.65;
+      font-weight: 300
+    }
+
+    .discover-card .outcome {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 500;
+      margin-top: .6rem;
+      letter-spacing: .02em
+    }
+
+    /* ── NOT FOR EVERYONE ── */
+    .nfe-wrap {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 2.5rem
+    }
+
+    .nfe-wrap h2 {
+      font-family: var(--serif);
+      font-size: clamp(24px, 4vw, 32px);
+      color: var(--white);
+      margin-bottom: .5rem;
+      letter-spacing: -.01em
+    }
+
+    .nfe-sub {
+      font-size: 14px;
+      color: var(--g3);
+      margin-bottom: 1.75rem;
+      font-weight: 300
+    }
+
+    .nfe-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .85rem
+    }
+
+    .nfe-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 1rem 1.25rem;
+      background: var(--navy-3);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 14px;
+      color: var(--g2);
+      line-height: 1.7;
+      font-weight: 300;
+      transition: border-color .2s;
+    }
+
+    .nfe-list li:hover {
+      border-color: rgba(220, 80, 80, .25)
+    }
+
+    .nfe-x {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(220, 80, 80, .14);
+      border: 1px solid rgba(220, 80, 80, .3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 12px;
+      color: #e06060;
+      margin-top: 2px;
+      font-weight: 700;
+    }
+
+    /* ── PROCESS NEW ── */
+    .process-grid-new {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 0;
+      align-items: start;
+      margin-bottom: 2rem
+    }
+
+    @media(max-width:680px) {
+      .process-grid-new {
+        grid-template-columns: 1fr;
+        gap: 0
+      }
+
+      .step-connector {
+        display: flex;
+        width: auto;
+        height: 36px;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 0;
+        padding-left: 1.5rem
+      }
+
+      .step-connector::after {
+        content: '';
+        display: block;
+        width: 2px;
+        height: 36px;
+        background: var(--gold-line);
+        border-radius: 2px;
+        font-size: 0
+      }
+    }
+
+    .step-new {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color .2s, transform .2s var(--ease-spring)
+    }
+
+    .step-new:hover {
+      border-color: var(--gold-line);
+      transform: translateY(-3px)
+    }
+
+    .step-connector {
+      width: 40px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 2.1rem
+    }
+
+    .step-connector::after {
+      content: '→';
+      color: var(--gold-line);
+      font-size: 20px
+    }
+
+    .step-num-new {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-family: var(--serif);
+      font-size: 15px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .step-body h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .5rem
+    }
+
+    .step-body p {
+      font-size: 14px;
+      color: var(--g3);
+      line-height: 1.7;
+      font-weight: 300
+    }
+
+    /* ── PROCESS (old kept for fallback) ── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative
+    }
+
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 19px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), var(--line), transparent);
+      z-index: 0
+    }
+
+    @media(max-width:620px) {
+      .process-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem
+      }
+
+      .process-grid::before {
+        display: none
+      }
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 .25rem
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--navy-2);
+      border: 1px solid var(--gold-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto .85rem;
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--gold);
+      transition: background .2s, transform .2s var(--ease-spring);
+    }
+
+    .step:hover .step-num {
+      background: var(--gold-dim);
+      transform: scale(1.12)
+    }
+
+    .step h4 {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 5px
+    }
+
+    .step p {
+      font-size: 11.5px;
+      color: var(--g3);
+      line-height: 1.55;
+      font-weight: 300
+    }
+
+    .process-note {
+      text-align: center;
+      font-size: 13.5px;
+      color: var(--g2);
+      margin-top: 2rem;
+      font-weight: 300
+    }
+
+    .process-note strong {
+      color: var(--gold);
+      font-weight: 600
+    }
+
+    /* ── TRUST ── */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem
+    }
+
+    @media(max-width:620px) {
+      .trust-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .trust-card {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: transform .2s var(--ease-spring), border-color .2s, box-shadow .2s;
+    }
+
+    .trust-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold-line);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .3)
+    }
+
+    .trust-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem
+    }
+
+    .trust-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .trust-card h4 {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .35rem
+    }
+
+    .trust-card p {
+      font-size: 14px;
+      color: var(--g3);
+      line-height: 1.65;
+      font-weight: 300
+    }
+
+    /* ── FAQ ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem
+    }
+
+    .faq-item {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color .2s
+    }
+
+    .faq-item.open {
+      border-color: var(--gold-line)
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem
+    }
+
+    .faq-q span.qt {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.45
+    }
+
+    .faq-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--navy-3);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--g3);
+      font-size: 16px;
+      font-weight: 300;
+      transition: background .2s, transform .3s var(--ease-spring), color .2s;
+    }
+
+    .faq-item.open .faq-icon {
+      background: var(--gold-dim);
+      color: var(--gold);
+      transform: rotate(45deg)
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s var(--ease-out), padding .3s;
+      padding: 0 1.5rem
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding-bottom: 1.25rem
+    }
+
+    .faq-a p {
+      font-size: 14px;
+      color: var(--g2);
+      line-height: 1.8;
+      font-weight: 300
+    }
+
+    /* ── URGENCY ── */
+    .urgency-wrap {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 2.5rem
+    }
+
+    .urgency-wrap h2 {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3.5vw, 30px);
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.25;
+      letter-spacing: -.01em
+    }
+
+    .urgency-wrap h2 em {
+      color: var(--gold);
+      font-style: italic
+    }
+
+    .urgency-body {
+      font-size: 14px;
+      color: var(--g3);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 680px;
+      margin-bottom: 2rem
+    }
+
+    .urgency-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem
+    }
+
+    @media(max-width:600px) {
+      .urgency-stats {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .urgency-stat {
+      background: var(--navy-3);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center
+    }
+
+    .urgency-num {
+      display: block;
+      font-family: var(--serif);
+      font-size: 36px;
+      color: var(--gold);
+      letter-spacing: -.02em;
+      margin-bottom: .35rem
+    }
+
+    .urgency-lbl {
+      display: block;
+      font-size: 13px;
+      color: var(--g3);
+      line-height: 1.65;
+      font-weight: 300
+    }
+
+    /* ── CTA ── */
+    .cta-block {
+      background: linear-gradient(135deg, var(--navy-4) 0%, var(--navy-3) 100%);
+      border: 1px solid var(--gold-line);
+      border-radius: 20px;
+      padding: 4rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(201, 168, 76, .06), 0 8px 40px rgba(0, 0, 0, .3);
+    }
+
+    .cta-block::before {
+      content: '';
+      position: absolute;
+      top: -90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 168, 76, .08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-block h2 {
+      font-family: var(--serif);
+      font-size: clamp(24px, 4.5vw, 36px);
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      letter-spacing: -.02em
+    }
+
+    .cta-block h2 em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    .cta-block p {
+      font-size: 15px;
+      color: var(--g2);
+      line-height: 1.85;
+      max-width: 460px;
+      margin: 0 auto 2rem;
+      font-weight: 300
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem
+    }
+
+    .cta-note {
+      font-size: 12px;
+      color: var(--g4)
+    }
+
+    .cta-note a {
+      color: var(--g3);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .cta-note a:hover {
+      color: var(--gold)
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--line);
+      text-align: center
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: var(--g4);
+      font-weight: 300;
+      line-height: 1.8
+    }
+
+    .footer a {
+      color: var(--g3);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .footer a:hover {
+      color: var(--gold)
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--navy)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--g4);
+      border-radius: 99px
+    }
+
+    /* --- NEW VISUAL UPGRADES CSS --- */
+
+    /* 1. Progress Bar */
+    #scroll-progress {
+      position: fixed;
+      top: 3px;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--gold);
+      z-index: 998;
+      transition: width .1s linear;
+    }
+
+    /* 2. Ticker */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: #18120a;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .ticker {
+      display: flex;
+      white-space: nowrap;
+      animation: ticker 40s linear infinite;
+    }
+
+    .ticker-item {
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 0 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    @keyframes ticker {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* 3. By The Numbers Section */
+    .btn-section {
+      background: var(--navy);
+      padding: 2rem 0 4rem;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    @media (min-width: 768px) {
+      .btn-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .btn-block {
+      background: var(--navy-2);
+      padding: 3.5rem 2.5rem;
+      border-top: 3px solid var(--gold);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .btn-num {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(48px, 8vw, 72px);
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 1rem;
+      font-weight: 400;
+    }
+
+    .btn-desc {
+      font-size: 14px;
+      color: var(--g3);
+      line-height: 1.6;
+    }
+
+    /* 4. Floating Contact */
+    .floating-contact {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 56px;
+      height: 56px;
+      background: var(--gold);
+      border-radius: 99px;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      overflow: hidden;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+      box-shadow: 0 4px 15px rgba(139, 100, 16, 0.3);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      text-decoration: none;
+    }
+
+    .floating-contact.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .floating-contact:hover {
+      width: 160px;
+      /* Expands for text */
+      box-shadow: 0 6px 20px rgba(139, 100, 16, 0.4);
+    }
+
+    .fc-icon {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fc-text {
+      color: #18120a;
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .floating-contact:hover .fc-text {
+      opacity: 1;
+      transition-delay: 0.1s;
+    }
+
+    /* 5. Credentials Grid */
+    .about-me-card p {
+      margin-bottom: 1rem;
+    }
+
+    .about-me-card p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .credential-pill {
+      background: var(--navy-3);
+      border: 1px solid var(--gold-line);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--g2);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gold-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .credentials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (min-width: 580px) {
+      .credentials-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .cred-card {
+      background: var(--navy-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color .2s, transform .2s var(--ease-out);
+    }
+
+    .cred-card:hover {
+      border-color: var(--gold-line);
+      transform: translateY(-3px);
+    }
+
+    .cred-issuer {
+      display: inline-flex;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+    }
+
+    .cred-title {
+      font-size: 16px;
+      color: var(--g1);
+      margin-bottom: .25rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .cred-date {
+      font-size: 13px;
+      color: var(--g4);
+      margin-bottom: 1rem;
+    }
+
+    .cred-desc {
+      font-size: 14px;
+      color: var(--g3);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .cred-skills {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .cred-skill {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-line);
+      color: var(--gold);
+      margin: 3px 3px 0 0;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Premium gold accent bar -->
+  <div class="page-top-bar"></div>
+  <div id="scroll-progress"></div>
+
+  <!-- 1. NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">Muhammad <span>Waseem</span></a>
+      <div class="nav-actions">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#process" class="nav-link">Process</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#case-study" class="nav-link">Case Study</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <button class="btn-nav" onclick="openModal()">Free Estimate</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 2. HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <!-- Premium credential badge -->
+      <div class="hero-credential">
+        <span class="hero-credential-dot"></span>
+        <span>800K+ Raw Transactions Processed &middot; 490K Clean Records Analyzed</span>
+      </div>
+
+      <p class="hero-eyebrow">For Health, Beauty &amp; Fashion Shopify Brands — Worldwide</p>
+
+      <ul class="hero-pain" style="list-style:none;padding:0">
+        <li>Most Shopify brands have no idea:</li>
+        <li><strong>· which customers are about to churn</strong></li>
+        <li><strong>· where future revenue is actually concentrated</strong></li>
+        <li><strong>· which buyers will drive — or destroy — next quarter</strong></li>
+      </ul>
+
+      <h1 class="hero-name">
+        <em class="shimmer-gold">Find the Revenue Your<br>Dashboard Can't See</em><br>
+        <span
+          style="font-size:clamp(22px,3.5vw,32px);color:var(--g2);font-weight:300;font-style:normal;letter-spacing:-.01em">with
+          Muhammad Waseem</span>
+      </h1>
+
+      <p class="hero-sub">
+        Accounting background meets analytics precision — which means every finding maps to a number on your P&amp;L,
+        not just a chart.<br>
+        For Shopify DTC brands doing $10K+/month — USD, GBP, EUR, CAD &amp; AUD supported.
+      </p>
+
+      <p class="hero-sub"
+        style="margin-top:-.75rem;margin-bottom:1.5rem;font-size:14px;background:var(--gold-dim);border:1px solid var(--gold-line);border-radius:8px;padding:.65rem 1rem;display:inline-block">
+        <strong style="color:var(--gold)">800K+ clean transactions analyzed</strong> — every model battle-tested on real
+        Shopify data before touching your store.
+      </p>
+
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="openModal()">Get Your Free Revenue Leak Estimate →</button>
+        <a class="btn-ghost" href="https://www.linkedin.com/in/mwaseem-analytics/" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+            <rect x="2" y="9" width="4" height="12" />
+            <circle cx="4" cy="4" r="2" />
+          </svg>
+          Or DM on LinkedIn
+        </a>
+      </div>
+
+      <div class="hero-meta">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=muhammadwaseem4133@gmail.com&su=Ecommerce%20Query"
+          target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <polyline points="2,4 12,13 22,4" />
+          </svg>
+          Email Me
+        </a>
+        <a href="https://www.linkedin.com/in/mwaseem-analytics/" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+            <rect x="2" y="9" width="4" height="12" />
+            <circle cx="4" cy="4" r="2" />
+          </svg>
+          Contact on LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal-bg" id="modal" onclick="maybeClose(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3>Get Your Free Revenue Leak Estimate</h3>
+      <p class="modal-desc">I'll review your store profile and give you a directional estimate of the at-risk revenue
+        hiding in your customer base — before we discuss anything else. No pitch. No pressure.</p>
+      <div class="form-group">
+        <label>Your Store URL</label>
+        <input type="url" id="f-url" placeholder="yourstore.myshopify.com" />
+      </div>
+      <div class="form-group">
+        <label>Monthly Revenue Range</label>
+        <select id="f-rev">
+          <option value="" disabled selected>Select range…</option>
+          <option>$10K – $30K / month</option>
+          <option>$30K – $100K / month</option>
+          <option>$100K+ / month</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Your Email Address</label>
+        <input type="email" id="f-email" placeholder="you@yourstore.com" />
+      </div>
+      <button class="btn-form" id="form-btn" onclick="submitForm()">Send My Estimate Request →</button>
+      <p class="form-note">Response within 24 hours · Your data is never shared with third parties</p>
+    </div>
+  </div>
+
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <div class="ticker-item">800K+ Transactions Analyzed ✦ 5,878 Customers Segmented ✦ £1.1M At-Risk Revenue Found ✦ 3
+        Service Tiers ✦ 14-Day Max Delivery ✦ 50% Only On Results ✦ Worldwide Remote ✦ Health · Beauty · Fashion</div>
+      <div class="ticker-item">800K+ Transactions Analyzed ✦ 5,878 Customers Segmented ✦ £1.1M At-Risk Revenue Found ✦ 3
+        Service Tiers ✦ 14-Day Max Delivery ✦ 50% Only On Results ✦ Worldwide Remote ✦ Health · Beauty · Fashion</div>
+    </div>
+  </div>
+
+
+  <!-- ABOUT ME + WHAT FOUNDERS DISCOVER -->
+  <div style="background:var(--navy);padding:3rem 0">
+    <div class="wrap">
+      <div class="about-me-card">
+        <h4>About Muhammad Waseem</h4>
+        <p>My background is in financial analysis — which means I was trained to follow numbers to their financial
+          consequence, not just their chart value. That discipline is what separates the analytics I deliver from a
+          typical data report: every finding connects directly to a decision that moves a real number on your P&amp;L.
+        </p>
+        <p>I built this service because I kept watching health, beauty and fashion founders spend thousands on ads while
+          their existing customers quietly left — and no dashboard was showing it. Silent churn. Invisible revenue risk.
+          Completely preventable with the right analysis.</p>
+        <p>I don't deliver insights that live in a spreadsheet. I deliver a clear picture of where your revenue is
+          concentrated, which customers are drifting, and what to do about it — in plain English, tied to numbers you
+          can act on.</p>
+
+        <div style="border-top: 1px solid var(--line); margin-top: 1.25rem; padding-top: 1rem;">
+          <p class="s-label" style="margin-bottom: 0.75rem;">Formal Training</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+
+            <div class="credential-pill"><span class="gold-dot"></span>IBM Data Science Professional Certificate</div>
+            <div class="credential-pill"><span class="gold-dot"></span>Customer Value, Acquisition &amp; Retention —
+              University of Maryland</div>
+            <div class="credential-pill"><span class="gold-dot"></span>Google Digital Marketing &amp; E-commerce</div>
+            <div class="credential-pill"><span class="gold-dot"></span>Google Data Analytics Professional Certificate
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <p class="s-label" style="margin-bottom:1.5rem">What founders typically discover</p>
+      <div class="discover-grid reveal">
+        <div class="discover-card stagger-item">
+          <div class="discover-icon-box">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </div>
+          <h4>A silent churn cluster</h4>
+          <p>Most brands find a group of high-spending customers who bought 2&ndash;3 times then stopped &mdash; with no
+            dashboard
+            flag, no alert, and no follow-up sequence triggered.</p>
+          <div class="outcome">&rarr; Typically 15&ndash;25% of total customer base</div>
+        </div>
+        <div class="discover-card stagger-item">
+          <div class="discover-icon-box">
+            <svg viewBox="0 0 24 24">
+              <line x1="12" y1="1" x2="12" y2="23" />
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <h4>Revenue concentrated in a tiny group</h4>
+          <p>The top 10&ndash;15% of customers are usually generating 50&ndash;70% of total revenue. Losing even a
+            handful of them
+            has an outsized P&amp;L impact that isn't visible until it's too late.</p>
+          <div class="outcome">&rarr; Identifies which relationships to protect first</div>
+        </div>
+        <div class="discover-card stagger-item">
+          <div class="discover-icon-box">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </div>
+          <h4>A predictable buying window</h4>
+          <p>Purchase frequency patterns reveal when your best customers are expected to return — and when silence means
+            they've likely left. Most brands have no idea this window exists.</p>
+          <div class="outcome">→ Turns retention from reactive to proactive</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- 4. CASE STUDY -->
+  <section class="section" id="case-study">
+    <div class="wrap">
+      <p class="s-label">Case Study — Real E-Commerce Dataset</p>
+      <div class="case-card reveal">
+        <div class="cs-stats">
+          <div class="cs-stat">
+            <span class="num">805,549</span>
+            <span class="lbl">Raw transactions processed</span>
+          </div>
+          <div class="cs-stat">
+            <span class="num">5,878</span>
+            <span class="lbl">Customers fully segmented</span>
+          </div>
+        </div>
+        <div class="cs-hero">
+          <span class="big">£1,146,967</span>
+          <span class="lbl">In at-risk revenue found — completely invisible on the dashboard</span>
+        </div>
+        <p class="cs-context">Publicly available UK e-commerce dataset · 805,549 raw → 490,514 clean records (from 805,549 raw) · £12.9M
+          total revenue mapped</p>
+        <p
+          style="font-size:13px;color:var(--gold);text-align:center;margin-top:.35rem;margin-bottom:1.25rem;font-style:italic">
+          Out of £12.9M total revenue mapped, £1.1M was found at-risk — completely invisible on the dashboard.</p>
+        <div class="cs-insight">
+          <div class="cs-card before">
+            <h4>What standard analytics showed</h4>
+            <ul>
+              <li>Revenue coming in steadily</li>
+              <li>Orders being fulfilled</li>
+              <li>Nothing alarming on the dashboard</li>
+              <li>629 high-value customers — invisible</li>
+            </ul>
+          </div>
+          <div class="cs-card after">
+            <h4>What RFM segmentation found</h4>
+            <ul>
+              <li>629 high-value customers gone cold</li>
+              <li>No dashboard alert. No flag. No warning.</li>
+              <li>All still recoverable with the right campaign</li>
+              <li>£1,146,967 still saveable — at the right time</li>
+            </ul>
+          </div>
+        </div>
+        <table class="seg-table">
+          <thead>
+            <tr>
+              <th>Segment</th>
+              <th>Behavior</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Champions</td>
+              <td>High recency, frequency &amp; spend</td>
+              <td><span class="badge b-protect">Protect &amp; reward</span></td>
+            </tr>
+            <tr>
+              <td>Loyal Customers</td>
+              <td>High frequency &amp; spend, consistent</td>
+              <td><span class="badge b-nurture">Nurture before drift</span></td>
+            </tr>
+            <tr>
+              <td>At-Risk</td>
+              <td>Dropping recency — used to buy regularly</td>
+              <td><span class="badge b-warn">Re-engage immediately</span></td>
+            </tr>
+            <tr>
+              <td>Hibernating</td>
+              <td>Long since last purchase</td>
+              <td><span class="badge b-winback">Win-back campaign</span></td>
+            </tr>
+            <tr>
+              <td>Lost</td>
+              <td>Very low recency, low activity</td>
+              <td><span class="badge b-low">Final attempt or ignore</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="divider-ornament-icon">
+      <svg viewBox="0 0 10 10">
+        <polygon points="5,1 9,5 5,9 1,5" fill="var(--gold)" opacity="0.6" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- 5. REVENUE LEAK CALCULATOR -->
+  <section class="section">
+    <div class="wrap">
+      <div class="calc-wrap reveal">
+        <p class="s-label" style="margin-bottom:1rem">Revenue Leak Estimator</p>
+        <h2 class="calc-title">How Much Revenue Are You Leaking?</h2>
+        <p class="calc-sub">Enter two numbers. See what industry averages suggest is quietly draining from your customer
+          base right now.</p>
+        <div class="calc-fields">
+          <div class="calc-field">
+            <label>Monthly Revenue ($)</label>
+            <input type="number" id="calc-rev" placeholder="e.g. 50000" min="0" />
+          </div>
+          <div class="calc-field">
+            <label>Total Customers (#)</label>
+            <input type="number" id="calc-cust" placeholder="e.g. 2000" min="0" />
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcRevenue()">Calculate My Estimate →</button>
+        <div class="calc-result" id="calc-result">
+          <span
+            style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--g3);font-weight:600;display:block;margin-bottom:.35rem">Estimated
+            90-Day At-Risk Revenue</span>
+          <span class="result-amount" id="result-amount"></span>
+          <p class="result-desc">
+            This is your estimated 90-day at-risk revenue — <strong>what RFM segmentation can help you recover</strong>
+            before these customers churn permanently. Most brands never see this number until it's too late.
+          </p>
+          <p class="calc-method-note">The 20% figure comes from industry-wide RFM benchmarks: at any given snapshot,
+            roughly 1 in 5 customers has entered an at-risk recency band. The 3× multiplier estimates recoverable value
+            over a 90-day window.</p>
+          <p class="calc-disclaimer">* Directional estimate based on industry averages. Actual figure found through full
+            RFM analysis of your specific customer base. Not a guarantee of recoverable revenue.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="divider-ornament-icon">
+      <svg viewBox="0 0 10 10">
+        <polygon points="5,1 9,5 5,9 1,5" fill="var(--gold)" opacity="0.6" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- 6. SERVICES -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <p class="s-label">Services</p>
+      <div class="services-grid">
+        <div class="svc s1 reveal d1">
+          <span class="svc-badge">Starter</span>
+          <h3>Revenue Leak Finder</h3>
+          <p class="tagline">"Know exactly who your best customers are — and who's leaving"</p>
+          <ul>
+            <li>Full purchase history analysis</li>
+            <li>Every customer segmented by behavior</li>
+            <li>Champions, At-Risk &amp; Lost identified</li>
+            <li>Action recommendations per segment</li>
+            <li>Excel output ready to use</li>
+          </ul>
+          <div class="price-cta" onclick="openModal()">Scope this project →</div>
+          <div class="turnaround">5–7 day turnaround</div>
+          <div class="svc-price-hint">Starting from $150</div>
+        </div>
+        <div class="svc s2 featured reveal d2">
+          <span class="popular-tag">Most popular</span>
+          <span class="svc-badge">Growth</span>
+          <h3>At-Risk Revenue Recovery</h3>
+          <p class="tagline">"Find your most valuable customers and protect future revenue"</p>
+          <ul>
+            <li>Everything in Starter, plus:</li>
+            <li>Customer Lifetime Value per segment</li>
+            <li>At-risk CLV — revenue you can still save</li>
+            <li>Top 20% flagged for VIP retention</li>
+            <li>Revenue concentration analysis</li>
+            <li>Excel dashboard included</li>
+          </ul>
+          <div class="price-cta price-cta--featured" onclick="openModal()">Scope this project →</div>
+          <div class="turnaround">7–10 day turnaround</div>
+          <div class="svc-price-hint">Starting from $300</div>
+        </div>
+        <div class="svc s3 reveal d3">
+          <span class="svc-badge">Full Package</span>
+          <h3>Complete Revenue X-Ray</h3>
+          <p class="tagline">"Complete analytics — from segmentation to forecasting"</p>
+          <ul>
+            <li>Everything in Growth, plus:</li>
+            <li>90-day sales forecast model</li>
+            <li>Inventory &amp; ad spend planning</li>
+            <li>Executive summary — plain English</li>
+            <li>30-min strategy walkthrough call</li>
+            <li>Complete strategy deck</li>
+          </ul>
+          <div class="price-cta" onclick="openModal()">Scope this project →</div>
+          <div class="turnaround">10–14 day turnaround</div>
+          <div class="svc-price-hint">Starting from $500</div>
+        </div>
+      </div>
+      <div class="svc-footer reveal" style="margin-top:1.1rem">
+        <span>✦ Fixed price per project — scoped on the free call</span>
+        <span>✦ You see the work before you pay the second half — no results, no final payment</span>
+        <span>✦ Revisions until you're satisfied</span>
+        <span>✦ Plain English — no data jargon</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="divider-ornament-icon">
+      <svg viewBox="0 0 10 10">
+        <polygon points="5,1 9,5 5,9 1,5" fill="var(--gold)" opacity="0.6" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- 7. NOT FOR EVERYONE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="nfe-wrap reveal">
+        <p class="s-label">Honest disclaimer</p>
+        <h2>This is not for everyone</h2>
+        <p class="nfe-sub">I'd rather tell you upfront than waste your time or mine.</p>
+        <ul class="nfe-list">
+          <li>
+            <span class="nfe-x">✕</span>
+            <span>This isn't right for stores doing <strong style="color:var(--g1)">under $10K/month</strong> — the math
+              won't justify the investment yet. Come back when you're there.</span>
+          </li>
+          <li>
+            <span class="nfe-x">✕</span>
+            <span>This isn't for founders who want <strong style="color:var(--g1)">vanity metrics</strong> — I only
+              deliver findings you can act on financially. If you want pretty dashboards, I'm not your analyst.</span>
+          </li>
+          <li>
+            <span class="nfe-x">✕</span>
+            <span>This isn't for brands without <strong style="color:var(--g1)">at least 6 months of order
+                history</strong> — the models need real data to work. New stores should build history first.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="divider-ornament-icon">
+      <svg viewBox="0 0 10 10">
+        <polygon points="5,1 9,5 5,9 1,5" fill="var(--gold)" opacity="0.6" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- 8. HOW IT WORKS -->
+  <section class="section" id="process">
+    <div class="wrap">
+      <p class="s-label">How it works</p>
+      <h2 class="reveal"
+        style="font-family:var(--serif);font-size:clamp(24px,4vw,34px);color:var(--white);margin-bottom:.5rem;letter-spacing:-.01em">
+        Three steps. One clear outcome.</h2>
+      <p class="reveal" style="font-size:14px;color:var(--g3);margin-bottom:2.5rem;font-weight:300">You invest under one
+        hour. I do the rest.</p>
+      <div class="process-grid-new reveal">
+        <div class="step-new">
+          <div class="step-num-new">1</div>
+          <div class="step-body">
+            <h4>Revenue Risk Scan</h4>
+            <p>I analyze your full customer purchase history and surface churn-risk patterns your dashboard has never
+              shown you. You share a single Shopify export — takes under 10 minutes.</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-new">
+          <div class="step-num-new">2</div>
+          <div class="step-body">
+            <h4>Segment Intelligence</h4>
+            <p>Your entire customer base is grouped into financially actionable segments — Champions, At-Risk,
+              Hibernating, Lost — each with CLV estimates attached. No guessing. No gut feel.</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-new">
+          <div class="step-num-new">3</div>
+          <div class="step-body">
+            <h4>Revenue Recovery Strategy</h4>
+            <p>You receive a plain-English report with retention actions tied directly to future revenue impact. Every
+              recommendation maps back to a number your CFO can act on.</p>
+          </div>
+        </div>
+      </div>
+      <p class="process-note reveal">Your time investment: <strong>under 1 hour.</strong> Mine: everything else.</p>
+    </div>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="divider-ornament-icon">
+      <svg viewBox="0 0 10 10">
+        <polygon points="5,1 9,5 5,9 1,5" fill="var(--gold)" opacity="0.6" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- 9. WHY WORK WITH ME -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <p class="s-label">Why work with me</p>
+      <div class="trust-grid">
+        <div class="trust-card reveal d1">
+          <div class="trust-icon"><svg viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg></div>
+          <h4>P&amp;L-level thinking</h4>
+          <p>Accounting background means every finding translates into financial language your CFO can act on — not
+            charts to admire.</p>
+        </div>
+        <div class="trust-card reveal d2">
+          <div class="trust-icon"><svg viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg></div>
+          <h4>Your data is safe</h4>
+          <p>Used only for analysis. Never shared with third parties. Permanently deleted on project completion. NDA
+            available on request.</p>
+        </div>
+        <div class="trust-card reveal d3">
+          <div class="trust-icon"><svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12,6 12,12 16,14" />
+            </svg></div>
+          <h4>Fixed price, fast delivery</h4>
+          <p>No retainers. No surprise invoices. You know the cost upfront — 50% only on delivery. Most projects done
+            within 14 days.</p>
+        </div>
+        <div class="trust-card reveal d1">
+          <div class="trust-icon"><svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg></div>
+          <h4>Remote — worldwide</h4>
+          <p>Working with Shopify brands worldwide from Pakistan. All major currencies supported.</p>
+        </div>
+        <div class="trust-card reveal d2">
+          <div class="trust-icon"><svg viewBox="0 0 24 24">
+              <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" />
+            </svg></div>
+          <h4>800K+ transactions analyzed</h4>
+          <p>Not theoretical. Every model has been tested on 800K+ real, clean e-commerce transactions before being
+            applied
+            to your store.</p>
+        </div>
+        <div class="trust-card reveal d3">
+          <div class="trust-icon"><svg viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg></div>
+          <h4>Plain English output</h4>
+          <p>Every deliverable is written for a founder who runs a business — not a PhD who reads papers. No translation
+            needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="divider-ornament-icon">
+      <svg viewBox="0 0 10 10">
+        <polygon points="5,1 9,5 5,9 1,5" fill="var(--gold)" opacity="0.6" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- 10. FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <p class="s-label">FAQ</p>
+      <div class="faq-list reveal">
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <button class="faq-q">
+            <span class="qt">Is my customer data safe?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Yes. Your data is used only for analysis, never shared with third parties, and permanently deleted upon
+              project completion. An NDA is available on request — just ask before we start.</p>
+          </div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <button class="faq-q">
+            <span class="qt">What do I need to share with you?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Just your Shopify order export — a standard CSV file. I'll send you exact step-by-step instructions the
+              moment we agree to work together. It takes under 10 minutes on your end. No API access, no integrations,
+              nothing complicated.</p>
+          </div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <button class="faq-q">
+            <span class="qt">What if I'm not satisfied with the output?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>I offer revisions until you're satisfied. You also pay 50% upfront and 50% only on delivery — so you
+              never pay in full before seeing results. If the work doesn't meet the agreed scope, we revisit it. Simple.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <button class="faq-q">
+            <span class="qt">How do I know this will actually find something in my store?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>In the case study dataset — a publicly available UK e-commerce store — RFM segmentation surfaced
+              £1,146,967 in at-risk revenue that was completely invisible on the standard dashboard. 629 high-value
+              customers had gone cold with zero alerts fired. That pattern — silent churn in a high-value segment —
+              appears in virtually every store with 6+ months of order history and 500+ customers. The only variable is
+              the size of the number. If your store qualifies (over $10K/month, 6+ months history), something is there.
+              The free estimate call exists specifically to tell you what that something looks like before you commit to
+              anything.</p>
+          </div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <button class="faq-q">
+            <span class="qt">Why should I pay for this when I can see my revenue in Shopify?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Shopify's dashboard tells you what already happened — total revenue, orders fulfilled, average order
+              value. It has no mechanism to show you which specific customers are drifting toward churn, how much
+              revenue is concentrated in your top segment, or when your best buyers are expected to return. That's not a
+              Shopify criticism — it's just not what it was built for. RFM segmentation reads the behavioral signals
+              inside your order history that no dashboard surfaces automatically. The founders who get the most value
+              from this are the ones who already feel like their repeat purchase rate should be higher than it is — but
+              can't see exactly where the problem is coming from.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- 11. FINAL CTA -->
+  <section class="section">
+    <div class="wrap">
+      <div class="cta-block reveal animate-glow">
+        <h2>
+          See Which Customers You're<br>
+          <em>About to Lose</em>
+        </h2>
+        <p>
+          Book a free 20-minute call. I'll tell you exactly where your hidden revenue risk is
+          before we work together. No pitch. No pressure. Just an honest diagnosis from someone
+          who translates customer data into P&amp;L-level decisions.
+        </p>
+        <div class="cta-actions">
+          <button class="btn-primary" onclick="openModal()">Get Your Free Revenue Leak Estimate →</button>
+          <p class="cta-note" style="margin-top:.5rem">
+            <em>Prefer email? <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=muhammadwaseem4133@gmail.com&su=Ecommerce%20Query"
+                target="_blank" rel="noopener">Email muhammadwaseem4133@gmail.com</a> or <a
+                href="https://www.linkedin.com/in/mwaseem-analytics/?utm_source=portfolio" target="_blank"
+                rel="noopener">DM on LinkedIn</a> · Response within 24 hours</em>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT BOXES -->
+  <section class="contact-section">
+    <div class="wrap">
+      <p class="s-label" style="margin-bottom:1.5rem">Get in touch</p>
+      <div class="contact-grid">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=muhammadwaseem4133@gmail.com&su=Ecommerce%20Query"
+          target="_blank" rel="noopener" class="contact-box email reveal d1">
+          <div class="contact-box-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <polyline points="2,4 12,13 22,4" />
+            </svg>
+          </div>
+          <div class="contact-box-body">
+            <div class="contact-box-label">Email</div>
+            <div class="contact-box-title">Email me</div>
+            <div class="contact-box-sub">Response within 24 hours</div>
+          </div>
+          <div class="contact-box-arrow">→</div>
+        </a>
+        <a href="https://www.linkedin.com/in/mwaseem-analytics/?utm_source=portfolio" target="_blank" rel="noopener"
+          class="contact-box linkedin reveal d2">
+          <div class="contact-box-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </div>
+          <div class="contact-box-body">
+            <div class="contact-box-label">LinkedIn</div>
+            <div class="contact-box-title">Contact on LinkedIn</div>
+            <div class="contact-box-sub">DM me directly — preferred for quick chats</div>
+          </div>
+          <div class="contact-box-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <p>© 2025 M. Waseem Analytics · Remote Worldwide · Based in Pakistan</p>
+      <p style="margin-top:.3rem">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=muhammadwaseem4133@gmail.com&su=Ecommerce%20Query"
+          target="_blank" rel="noopener">Email me</a> ·
+        <a href="https://www.linkedin.com/in/mwaseem-analytics/" target="_blank" rel="noopener">Contact on LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- FLOATING CONTACT -->
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=muhammadwaseem4133@gmail.com&su=Ecommerce%20Query"
+    target="_blank" rel="noopener" class="floating-contact" id="floating-btn">
+    <div class="fc-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#18120a" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+        <polyline points="22,6 12,13 2,6"></polyline>
+      </svg>
+    </div>
+    <div class="fc-text">Email Me</div>
+  </a>
+
+  <script>
+
+    // Scroll Progress
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      const pct = Math.min(100, Math.max(0, (scrolled / total) * 100));
+      document.getElementById('scroll-progress').style.width = pct + '%';
+    }, { passive: true });
+
+    // Floating button visibility
+    const floatBtn = document.getElementById('floating-btn');
+    const heroSec = document.querySelector('.hero');
+    if (floatBtn && heroSec) {
+      const floatObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting && e.boundingClientRect.top < 0) {
+            floatBtn.classList.add('show');
+          } else {
+            floatBtn.classList.remove('show');
+          }
+        });
+      }, { threshold: 0 });
+      floatObserver.observe(heroSec);
+    }
+
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 8), { passive: true });
+
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+    }, { threshold: 0.10 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Stagger items observer
+    const sio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('vis');
+          sio.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.stagger-item').forEach(el => sio.observe(el));
+
+    // Counter animation for urgency stats
+    function animateCounter(el, to, suffix, duration = 1400) {
+      const numEl = el.querySelector('.urgency-num');
+      if (!numEl || to === 0) { return; }
+      let start = null;
+      const step = ts => {
+        if (!start) start = ts;
+        const prog = Math.min((ts - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - prog, 3);
+        numEl.textContent = Math.round(ease * to) + suffix;
+        if (prog < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    const cio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const to = parseInt(e.target.dataset.countTo) || 0;
+          const suffix = e.target.dataset.suffix || '';
+          animateCounter(e.target, to, suffix);
+          cio.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('[data-count-to]').forEach(el => cio.observe(el));
+
+    // Modal
+    function openModal() { document.getElementById('modal').classList.add('open'); document.body.style.overflow = 'hidden' }
+    function closeModal() { document.getElementById('modal').classList.remove('open'); document.body.style.overflow = '' }
+    function maybeClose(e) { if (e.target === document.getElementById('modal')) closeModal() }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() });
+    async function submitForm() {
+      const btn = document.getElementById('form-btn');
+      const url = document.getElementById('f-url').value.trim();
+      const rev = document.getElementById('f-rev').value;
+      const email = document.getElementById('f-email').value.trim();
+      if (!url || !rev || !email) {
+        alert('Please fill in all fields before submitting.');
+        return;
+      }
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      try {
+        const res = await fetch('https://formspree.io/f/mwpzgkrb', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ storeUrl: url, revenueRange: rev, email: email })
+        });
+        if (res.ok) {
+          btn.textContent = "Sent! I'll be in touch within 24 hours ✓";
+          btn.style.background = 'var(--green)';
+          btn.style.color = 'var(--white)';
+          setTimeout(closeModal, 2800);
+        } else {
+          btn.textContent = 'Opening Gmail…';
+          btn.disabled = false;
+          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=muhammadwaseem4133@gmail.com&su=Revenue%20Leak%20Estimate%20Request&body=Store%20URL%3A%20${encodeURIComponent(url)}%0ARevenue%20Range%3A%20${encodeURIComponent(rev)}%0AEmail%3A%20${encodeURIComponent(email)}`;
+          window.open(gmailUrl, '_blank');
+          btn.textContent = 'Send My Estimate Request →';
+          setTimeout(closeModal, 1000);
+        }
+      } catch {
+        btn.textContent = 'Opening Gmail…';
+        btn.disabled = false;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=muhammadwaseem4133@gmail.com&su=Revenue%20Leak%20Estimate%20Request&body=Store%20URL%3A%20${encodeURIComponent(url)}%0ARevenue%20Range%3A%20${encodeURIComponent(rev)}%0AEmail%3A%20${encodeURIComponent(email)}`;
+        window.open(gmailUrl, '_blank');
+        btn.textContent = 'Send My Estimate Request →';
+        setTimeout(closeModal, 1000);
+      }
+    }
+
+    // Calculator
+    function calcRevenue() {
+      const rev = parseFloat(document.getElementById('calc-rev').value) || 0;
+      const cust = parseFloat(document.getElementById('calc-cust').value) || 0;
+      if (!rev || !cust) { alert('Please enter both values.'); return; }
+      const atRisk = rev * 0.20 * 3;
+      const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+      // Animate count-up on result
+      const el = document.getElementById('result-amount');
+      const r = document.getElementById('calc-result');
+      r.classList.add('show');
+      r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      let start = null;
+      const dur = 1000;
+      const step = ts => {
+        if (!start) start = ts;
+        const prog = Math.min((ts - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - prog, 3);
+        el.textContent = fmt.format(Math.round(ease * atRisk));
+        if (prog < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    ['calc-rev', 'calc-cust'].forEach(id => {
+      document.getElementById(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') calcRevenue() });
+    });
+
+    // FAQ
+    function toggleFaq(item) {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+</body>
+
+</html>
